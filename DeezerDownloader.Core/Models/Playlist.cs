@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace DeezerDownloader.Core
+namespace DeezerDownloader.Core.Models
 {
     public class Playlist
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace DeezerDownloader.Core
+namespace DeezerDownloader.Core.Models
 {
     public class Track
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace DeezerDownloader.Core
+namespace DeezerDownloader.Core.Models
 {
     public class PlaylistsResponse
     {
