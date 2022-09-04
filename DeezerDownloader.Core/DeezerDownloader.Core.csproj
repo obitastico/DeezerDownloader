@@ -7,8 +7,8 @@
         <ProjectGuid>{3F3FE935-65ED-499E-9911-5E961E324DF5}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>DeezerDownloader</RootNamespace>
-        <AssemblyName>DeezerDownloader</AssemblyName>
+        <RootNamespace>DeezerDownloader.Core</RootNamespace>
+        <AssemblyName>DeezerDownloader.Core</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

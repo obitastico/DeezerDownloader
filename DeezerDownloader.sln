@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeezerDownloader", "DeezerDownloader.csproj", "{3F3FE935-65ED-499E-9911-5E961E324DF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeezerDownloader.Core", "DeezerDownloader.Core\DeezerDownloader.Core.csproj", "{3F3FE935-65ED-499E-9911-5E961E324DF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
