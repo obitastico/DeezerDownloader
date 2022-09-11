@@ -1,9 +1,0 @@
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\bin\Debug\DeezerDownloaderForm.exe.config
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\bin\Debug\DeezerDownloaderForm.exe
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\bin\Debug\DeezerDownloaderForm.pdb
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.csproj.AssemblyReference.cache
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.Properties.Resources.resources
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.csproj.GenerateResource.cache
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.csproj.CoreCompileInputs.cache
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.exe
-D:\Programmieren\RiderProjects\DeezerDownloader\DeezerDownloaderForm\DeezerDownloaderForm\obj\Debug\DeezerDownloaderForm.pdb
