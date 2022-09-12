@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DeezerDownloaderForm.Properties
+namespace DeezerDownloader.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -45,7 +45,7 @@ namespace DeezerDownloaderForm.Properties
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp =
-                        new global::System.Resources.ResourceManager("DeezerDownloaderForm.Properties.Resources",
+                        new global::System.Resources.ResourceManager("DeezerDownloader.Properties.Resources",
                             typeof(Resources).Assembly);
                     resourceMan = temp;
                 }

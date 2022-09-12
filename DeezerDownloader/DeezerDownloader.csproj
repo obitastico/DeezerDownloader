@@ -6,8 +6,8 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{A1AC272B-43BD-4DD7-970E-ACF94C5EF870}</ProjectGuid>
         <OutputType>WinExe</OutputType>
-        <RootNamespace>DeezerDownloaderForm</RootNamespace>
-        <AssemblyName>DeezerDownloaderForm</AssemblyName>
+        <RootNamespace>DeezerDownloader</RootNamespace>
+        <AssemblyName>DeezerDownloader</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -54,6 +54,12 @@
         </Compile>
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="WaitProgress.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="WaitProgress.Designer.cs">
+          <DependentUpon>WaitProgress.cs</DependentUpon>
+        </Compile>
         <EmbeddedResource Include="DeezerDownloaderForm.resx">
           <DependentUpon>DeezerDownloaderForm.cs</DependentUpon>
         </EmbeddedResource>
@@ -66,6 +72,9 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
+        <EmbeddedResource Include="WaitProgress.resx">
+          <DependentUpon>WaitProgress.cs</DependentUpon>
+        </EmbeddedResource>
         <None Include="Properties\Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
             <LastGenOutput>Settings.Designer.cs</LastGenOutput>
