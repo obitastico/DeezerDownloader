@@ -3,13 +3,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using DeezerDownloader.Core;
 
 namespace DeezerDownloader
 {
     public partial class DeezerDownloaderForm : Form, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public readonly DeezerClient Deezer = new DeezerClient();
 
         public string SavePath
         {
@@ -71,19 +74,19 @@ namespace DeezerDownloader
             switch (DDFLinkTextBox.Text)
             {
                 case string a when a.Contains("profile"):
+                    long userId = Convert.ToInt64(a.Split('/')[a.Split('/').ToList().IndexOf("profile") + 1]);
                     break;
                 case string b when b.Contains("playlist"):
+                    
                     break;
                 case string c when c.Contains("album"):
+                    Debug.WriteLine(c);
                     break;
                 default:
                     MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 
                         @"Download nicht möglich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
             }
-            
-            WaitProgress wp = new WaitProgress();
-            wp.Show();
         }
 
         private void DDFLinkTextBox_GotFocus(object sender, EventArgs e)

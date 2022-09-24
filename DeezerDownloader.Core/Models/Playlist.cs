@@ -22,11 +22,13 @@ namespace DeezerDownloader.Core.Models
         public DateTime CreationDate { get; set; }
         [JsonProperty(PropertyName = "tracks")]
         public TracksResponse Tracks { get; set; }
+        [JsonProperty(PropertyName = "creator")]
+        public Creator Creator { get; set; }
 
         public override string ToString()
         {
             return $"<Playlist Id={Id} Title={Title} Duration={Duration} Collaborative={Collaborative} Link={Link} " +
-                   $"Tracklist={Tracklist} CreationDate={CreationDate}>";
+                   $"Tracklist={Tracklist} CreationDate={CreationDate} Creator={Creator}>";
         }
     }
 }

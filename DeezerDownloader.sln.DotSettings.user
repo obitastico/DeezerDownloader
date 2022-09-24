@@ -1,5 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CProgrammieren_005CRiderProjects_005CDeezerDownloader_005Cpackages_005CYoutubeDownloader_002ECore_002E1_002E9_002E3_005Clib_005Cnet6_002E0_002Dwindows7_002E0_005CYoutubeDownloader_002ECore_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CProgrammieren_005CRiderProjects_005CYoutubeDownloader_005CYoutubeDownloader_002ECore_005Cbin_005CRelease_005Cnet6_002E0_002Dwindows_005Cpublish_005CYoutubeDownloader_002ECore_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CProgrammieren_005CRiderProjects_005CYoutubeDownloader_005CYoutubeDownloader_002ECore_005Cbin_005CRelease_005CYoutubeDownloader_002ECore_002E1_002E9_002E3_002Enupkg/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">WARNING</s:String>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="D:\Programmieren\RiderProjects\DeezerDownloader\packages\YoutubeExplode.Converter.6.2.2\lib\net461\YoutubeExplode.Converter.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
 	
 	
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=DeezerDownloader_002FDeezerDownloaderForm/@EntryIndexedValue">True</s:Boolean>

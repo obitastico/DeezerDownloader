@@ -88,5 +88,11 @@
     <ItemGroup>
         <None Include="App.config" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DeezerDownloader.Core\DeezerDownloader.Core.csproj">
+        <Project>{3f3fe935-65ed-499e-9911-5e961e324df5}</Project>
+        <Name>DeezerDownloader.Core</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

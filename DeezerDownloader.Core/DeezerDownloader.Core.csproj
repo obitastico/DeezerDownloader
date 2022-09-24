@@ -12,6 +12,7 @@
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,8 +37,14 @@
         <Reference Include="AngleSharp, Version=0.17.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
           <HintPath>packages\AngleSharp.0.17.0\lib\net472\AngleSharp.dll</HintPath>
         </Reference>
+        <Reference Include="CliWrap, Version=3.4.4.0, Culture=neutral, PublicKeyToken=1c4a4fc2d6886e5a, processorArchitecture=MSIL">
+          <HintPath>..\packages\CliWrap.3.4.4\lib\net461\CliWrap.dll</HintPath>
+        </Reference>
         <Reference Include="Gress, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>packages\Gress.2.0.1\lib\netstandard2.0\Gress.dll</HintPath>
+        </Reference>
+        <Reference Include="JsonExtensions, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\JsonExtensions.1.2.0\lib\netstandard2.0\JsonExtensions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
           <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -52,6 +59,7 @@
         </Reference>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Management" />
         <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
           <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
         </Reference>
@@ -62,6 +70,9 @@
         </Reference>
         <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
         </Reference>
         <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
@@ -79,22 +90,35 @@
           <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
         </Reference>
         <Reference Include="System.Xml" />
-        <Reference Include="YoutubeExplode, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>packages\YoutubeExplode.6.2.1\lib\net461\YoutubeExplode.dll</HintPath>
+        <Reference Include="TagLibSharp, Version=2.3.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+          <HintPath>..\packages\TagLibSharp.2.3.0\lib\net462\TagLibSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="YoutubeExplode, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\YoutubeExplode.6.2.2\lib\net461\YoutubeExplode.dll</HintPath>
+        </Reference>
+        <Reference Include="YoutubeExplode.Converter, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\YoutubeExplode.Converter.6.2.2\lib\net461\YoutubeExplode.Converter.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AudioDownloader.cs" />
         <Compile Include="DeezerClient.cs" />
         <Compile Include="DeezerDownloader.cs" />
         <Compile Include="ExtensionMethods.cs" />
         <Compile Include="Models\Album.cs" />
         <Compile Include="Models\Artist.cs" />
+        <Compile Include="Models\Creator.cs" />
+        <Compile Include="Models\MusicBrainzRecording.cs" />
         <Compile Include="Models\Playlist.cs" />
         <Compile Include="Models\PlaylistsResponse.cs" />
         <Compile Include="Models\Track.cs" />
         <Compile Include="Models\TracksResponse.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Tagging\Http.cs" />
+        <Compile Include="Tagging\MediaFile.cs" />
+        <Compile Include="Tagging\MediaTagInjector.cs" />
+        <Compile Include="Tagging\MusicBrainzClient.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="App.config" />

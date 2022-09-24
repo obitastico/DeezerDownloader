@@ -7,7 +7,7 @@ namespace DeezerDownloader.Core
         public static async Task Main(string[] args)
         {
             DeezerDownloader deezer = new DeezerDownloader();
-            await deezer.DownloadPlaylist(9861281962);
+            await deezer.DownloadUserPlaylists(3697832482, @"D:\Programmieren\RiderProjects\DeezerDownloader\out");
         }
     }
 }
