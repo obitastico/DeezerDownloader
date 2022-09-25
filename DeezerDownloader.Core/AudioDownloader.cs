@@ -41,16 +41,15 @@ namespace DeezerDownloader.Core
             if (!string.IsNullOrWhiteSpace(dirPath))
                 Directory.CreateDirectory(dirPath);
 
-            await Youtube.Videos.DownloadAsync(
-                new[] { streamInfo }, 
-                new ConversionRequestBuilder(filePath)
-                    .SetContainer(Container.Mp3)
-                    .SetPreset(ConversionPreset.UltraFast)
-                    .Build(),
-                progress
-            );
-
-
+            // await Youtube.Videos.DownloadAsync(
+            //     new[] { streamInfo }, 
+            //     new ConversionRequestBuilder(filePath)
+            //         .SetContainer(Container.Mp3)
+            //         .SetPreset(ConversionPreset.UltraFast)
+            //         .Build(),
+            //     progress
+            // );
+            
             await TagInjector.InjectTagsAsync(filePath, videoInfo);
         }
     }

@@ -71,10 +71,8 @@ namespace DeezerDownloader.Core.Tagging
                     .OrderByDescending(t => t.Resolution.Area)
                     .Select(t => t.Url)
                     .FirstOrDefault() ??
-                $"https://i.ytimg.com/vi/{video.Id}/hqdefault.jpg";
-            
-            Console.WriteLine(thumbnailUrl);
-            
+                $"https://i.ytimg.com/vi/{video.Id}/mqdefault.jpg";
+
             mediaFile.SetThumbnail(
                 await Http.Client.GetByteArrayAsync(thumbnailUrl)
             );
@@ -85,7 +83,7 @@ namespace DeezerDownloader.Core.Tagging
             IVideo video)
         {
             using var mediaFile = MediaFile.Create(filePath);
-
+ 
             InjectMiscMetadata(mediaFile, video);
             await InjectMusicMetadataAsync(mediaFile, video);
             await InjectThumbnailAsync(mediaFile, video);

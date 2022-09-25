@@ -1,5 +1,7 @@
 using System;
+using System.Net.Mime;
 using TagLib;
+using TagLib.Id3v2;
 using TagFile = TagLib.File;
 
 namespace DeezerDownloader.Core.Tagging
@@ -10,8 +12,17 @@ namespace DeezerDownloader.Core.Tagging
 
         public MediaFile(TagFile file) => _file = file;
 
-        public void SetThumbnail(byte[] thumbnailData) =>
-            _file.Tag.Pictures = new IPicture[] { new Picture(thumbnailData) };
+        public void SetThumbnail(byte[] thumbnailData)
+        {
+            Picture pic = new Picture(thumbnailData);
+            AttachmentFrame albumCoverPic = new AttachmentFrame(pic);
+            albumCoverPic.MimeType = MediaTypeNames.Image.Jpeg;
+            albumCoverPic.Type = PictureType.FileIcon;
+            albumCoverPic.Description = "Front";
+
+            _file.Tag.Pictures = new IPicture[] { albumCoverPic };
+        }
+            
 
         public void SetArtist(string artist) =>
             _file.Tag.Performers = new[] { artist };
@@ -44,7 +55,7 @@ namespace DeezerDownloader.Core.Tagging
         public static MediaFile Create(string filePath)
         {
             return new MediaFile(TagFile.Create(filePath));
-        } 
+        }
     }
 }
 

@@ -13,8 +13,8 @@ namespace DeezerDownloader.Core.Tagging
         public async Task<IReadOnlyList<MusicBrainzRecording>> SearchRecordingsAsync(
             string query)
         {
-            var url = $"http://musicbrainz.org/ws/2/recording?version=2&fmt=json&dismax=true&limit=100" +
-                      $"&query={Uri.EscapeDataString(query)}";
+            var url = $"http://musicbrainz.org/ws/2/recording?version=2&fmt=json&dismax=true&limit=50" +
+                      $"&query={Uri.EscapeDataString(query.ToLower())}";
 
             var json = await Http.Client.GetJsonAsync(url);
 

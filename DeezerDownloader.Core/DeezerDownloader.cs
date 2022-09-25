@@ -65,10 +65,11 @@ namespace DeezerDownloader.Core
 
         public async Task DownloadTrack(Track track, string filePath)
         {
-            try
-            {
-                File.Delete(filePath);
-            } catch (DirectoryNotFoundException) {}
+            // try
+            // {
+            //     File.Delete(filePath);
+            // } catch (DirectoryNotFoundException) {}
+            //// TODO: Undo comment
             
             Progress<double> progress = new Progress<double>(p => ProgressHandler(p, track));
             await AudioDownloader.DownloadAudioAsnyc(track, filePath, progress);
