@@ -61,18 +61,14 @@ namespace DeezerDownloader.Core.Tagging
             MediaFile mediaFile,
             IVideo video)
         {
-            var thumbnailUrl =
-                video.Thumbnails
-                    .Where(t => string.Equals(
-                        t.TryGetImageFormat(),
-                        "jpg",
-                        StringComparison.OrdinalIgnoreCase
-                    ))
-                    .OrderByDescending(t => t.Resolution.Area)
-                    .Select(t => t.Url)
-                    .FirstOrDefault() ??
-                $"https://i.ytimg.com/vi/{video.Id}/mqdefault.jpg";
+            var thumbnailUrl = $"https://i.ytimg.com/vi/{video.Id}/hqdefault.jpg";
+                // video.Thumbnails
+                //     .OrderByDescending(t => t.Resolution.Area)
+                //     .Select(t => t.Url)
+                //     .FirstOrDefault() ??
 
+            Console.WriteLine(thumbnailUrl);
+            
             mediaFile.SetThumbnail(
                 await Http.Client.GetByteArrayAsync(thumbnailUrl)
             );

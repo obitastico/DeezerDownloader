@@ -11,11 +11,6 @@ namespace DeezerDownloader.Core
         {
             return (int)((value  - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
         }
-        
-        public static string TryGetImageFormat(this Thumbnail thumbnail) =>
-            TryExtractFileName(thumbnail.Url)?.Pipe(Path.GetExtension)?.Trim('.');
-        
-        public static TOut Pipe<TIn, TOut>(this TIn input, Func<TIn, TOut> transform) => transform(input);
 
         public static string NullIfEmptyOrWhiteSpace(this string str)
         {

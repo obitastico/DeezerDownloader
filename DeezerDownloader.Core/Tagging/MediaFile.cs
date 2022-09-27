@@ -17,7 +17,7 @@ namespace DeezerDownloader.Core.Tagging
             Picture pic = new Picture(thumbnailData);
             AttachmentFrame albumCoverPic = new AttachmentFrame(pic);
             albumCoverPic.MimeType = MediaTypeNames.Image.Jpeg;
-            albumCoverPic.Type = PictureType.FileIcon;
+            albumCoverPic.Type = PictureType.FrontCover;
             albumCoverPic.Description = "Front";
 
             _file.Tag.Pictures = new IPicture[] { albumCoverPic };
