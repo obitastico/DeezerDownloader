@@ -12,6 +12,17 @@ namespace DeezerDownloader.Core
             return (int)((value  - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
         }
 
+        public static string ContainsAny(this string str, params string[] elements)
+        {
+            foreach (string element in elements)
+            {
+                if (str.Contains(element))
+                    return element;
+            }
+
+            return null;
+        }
+
         public static string NullIfEmptyOrWhiteSpace(this string str)
         {
             return !string.IsNullOrEmpty(str.Trim()) ? str : null;

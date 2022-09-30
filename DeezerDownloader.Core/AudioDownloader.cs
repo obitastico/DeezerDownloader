@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DeezerDownloader.Core.Tagging;
 using Gress;
@@ -26,7 +28,7 @@ namespace DeezerDownloader.Core
             TagInjector = new MediaTagInjector();
         }
 
-        public async Task DownloadAudioAsnyc(Track track, string filePath, Progress<double> progress)
+        public async Task DownloadAudioAsnyc(Track track, string filePath, IProgress<double> progress)
         {
             string sQuery = $"{track.Artist.Name} - {track.Title}";
             VideoSearchResult videoInfo = (await Youtube.Search.GetVideosAsync(sQuery).CollectAsync(1)).FirstOrDefault();
@@ -41,6 +43,13 @@ namespace DeezerDownloader.Core
                 .OrderBy(x => x.Size)
                 .FirstOrDefault();
             
+            // for (int i = 1; i <= 100; i++)
+            // {
+            //     progress.Report(i * Math.Pow(10, -2));
+            //     Debug.WriteLine(i * Math.Pow(10, -2));
+            //     await Task.Delay(75);
+            // }
+
             var dirPath = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrWhiteSpace(dirPath))
                 Directory.CreateDirectory(dirPath);

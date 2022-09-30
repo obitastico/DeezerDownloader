@@ -4,13 +4,15 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using DeezerDownloader.Core;
+using DeezerDownloader.Core.Models;
 
 namespace DeezerDownloader
 {
     public partial class DeezerDownloaderForm : Form, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public readonly Downloader Deezer = new Downloader();
+        public Downloader Deezer { get; }
+        public WaitProgress ProgressView { get; set; }
 
         public string SavePath
         {
@@ -33,6 +35,13 @@ namespace DeezerDownloader
         {
             InitializeComponent();
             DDFPathTextBox.DataBindings.Add("Text", this, "SavePath", true, DataSourceUpdateMode.OnPropertyChanged);
+            Deezer = new Downloader();
+            Deezer.ProgressChangedEvent += DeezerOnProgressChangedEvent;
+        }
+
+        private void DeezerOnProgressChangedEvent(double p, Track track)
+        {
+            ProgressView.PerfomStep(p, $"Downloading... {track.Artist.Name} - {track.Title} {(int)Math.Round(p * 100)}%");
         }
 
         private void DDFChoosePathButton_Click(object sender, EventArgs e)
@@ -69,24 +78,21 @@ namespace DeezerDownloader
                 return;
             }
 
-            switch (DDFLinkTextBox.Text)
+            string linkType = DDFLinkTextBox.Text.ContainsAny("profile", "playlist", "album");
+            if (linkType == null)
             {
-                case string a when a.Contains("profile"):
-                    long userId = Helper.GetIdByParameterName(a, "profile");
-                    await Deezer.DownloadUserPlaylists(userId, SavePath);
-                    break;
-                case string b when b.Contains("playlist"):
-                    long playlistId = Helper.GetIdByParameterName(b, "playlist");
-                    await Deezer.DownloadPlaylist(SavePath, playlistId);
-                    break;
-                case string c when c.Contains("album"):
-                    long albumId = Helper.GetIdByParameterName(c, "album");
-                    break;
-                default:
-                    MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 
-                        @"Download nicht möglich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 
+                    @"Download nicht möglich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+
+            ProgressView = new WaitProgress();
+            ProgressView.Show();
+            long id = Helper.GetIdByParameterName(DDFLinkTextBox.Text, linkType);
+            await Deezer.DownloadDeezerUrlOfType(SavePath, id, linkType);
+            ProgressView.Close();
+
+            MessageBox.Show("Download abgeschlossen", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void DDFLinkTextBox_GotFocus(object sender, EventArgs e)

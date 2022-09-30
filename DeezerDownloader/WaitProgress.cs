@@ -8,14 +8,15 @@ namespace DeezerDownloader
         public WaitProgress()
         {
             InitializeComponent();
+            WaitProgressBar.Minimum = 0;
+            WaitProgressBar.Maximum = 100;
         }
-        
-        private void WaitProgress_Shown(object sender, EventArgs e)
+
+        public void PerfomStep(double p, string text)
         {
-            for (int i = 0; i < 100; i++)
-            {
-                WaitProgressBar.PerformStep();
-            }
+            WaitProgressBar.Step = (int)Math.Round(p * 100) - WaitProgressBar.Value;
+            WaitProgressBar.PerformStep();
+            WaitProgressStatusLabel.Text = text;
         }
     }
 }

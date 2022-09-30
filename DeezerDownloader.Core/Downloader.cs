@@ -1,25 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using DeezerDownloader.Core.Models;
-using DeezerDownloader.Core.Tagging;
 
 namespace DeezerDownloader.Core
 {
     public class Downloader
     {
         private AudioDownloader AudioDownloader { get; }
-
         private DeezerClient Deezer { get; set; }
+        public delegate void ProgressEventHandler(double p, Track track);
+        public event ProgressEventHandler ProgressChangedEvent;
 
         public Downloader()
         {
             AudioDownloader = new AudioDownloader();
             Deezer = new DeezerClient();
+            ProgressChangedEvent += OnProgressChangedEvent;
         }
 
-        public async Task DownloadUserPlaylists(long userId, string rootPath)
+        public async Task DownloadDeezerUrlOfType(
+            string rootPath, 
+            long id, 
+            string linkType
+        )
+        {
+            switch (linkType)
+            {
+                case "profile":
+                    await DownloadUserPlaylists(rootPath, id);
+                    break;
+                case "album":
+                    await DownloadAlbum(rootPath, id);
+                    break;
+                case "playlist":
+                    await DownloadPlaylist(rootPath, id);
+                    break;
+            }
+        }
+
+        public async Task DownloadUserPlaylists(string rootPath, long userId)
         {
             List<Playlist> playlists = Deezer.GetPlaylistsByUserId(userId);
             if (playlists.Count == 0)
@@ -28,7 +50,6 @@ namespace DeezerDownloader.Core
             foreach (Playlist playlist in playlists)
             {
                 await DownloadPlaylist(rootPath, playlist.Id);
-                break; //// TODO: for final
             }
         }
 
@@ -49,7 +70,6 @@ namespace DeezerDownloader.Core
             foreach (Track track in tracks)
             {
                 await DownloadTrack(track, Path.Combine(rootPath, playlist.Creator.Name, playlist.Title, track.Title+".mp3"));
-                break; //// TODO: for final
             }
             
             Console.WriteLine($"Download of Playlist {playlist.Title} has been successful!");
@@ -71,21 +91,21 @@ namespace DeezerDownloader.Core
 
         public async Task DownloadTrack(Track track, string filePath)
         {
-            
             try
             { 
                 File.Delete(filePath);
-            } 
+            }
             catch (DirectoryNotFoundException) {}
 
-            Progress<double> progress = new Progress<double>(p => ProgressHandler(p, track));
+            Progress<double> progress = new Progress<double>(p => ProgressChangedEvent.Invoke(p, track));
             await AudioDownloader.DownloadAudioAsnyc(track, filePath, progress);
         }
-
-        private void ProgressHandler(double progress, Track track)
+        
+        private void OnProgressChangedEvent(double progress, Track track)
         {
             int totalBlockCount = 36;
-            int blockCount = progress.Map(0, 1, 0, totalBlockCount + 1);
+            int blockCount = progress.Map(0, 1, 1, totalBlockCount + 1);
+            blockCount = totalBlockCount < blockCount ? totalBlockCount : blockCount;
             string newLine = (int)Math.Round(progress * 100) == 100 ? "\n" : "";
             string text = $"\rDownloading... {track.Artist.Name} - {track.Title} Progress: " +
                           $"[{new string('=', blockCount)}>{new string('-', totalBlockCount - blockCount)}] " +
