@@ -12,6 +12,8 @@ namespace DeezerDownloader.Core
         private const string BaseUrl = "https://api.deezer.com";
         private HttpClient Client { get; }
 
+        private static readonly JsonSerializerSettings Settings = new() { DateFormatString = "yyyy-MM-dd HH:mm:ss" };
+
         public DeezerClient()
         {
             Client = new HttpClient();
@@ -29,14 +31,8 @@ namespace DeezerDownloader.Core
 
             do
             {
-                HttpResponseMessage response = Client.GetAsync(url).Result;
-                if (!response.IsSuccessStatusCode)
-                    return null;
-
-                string sResponse = response.Content.ReadAsStringAsync().Result;
-
-                var settings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-dd HH:mm:ss" };
-                playlistsResponse = JsonConvert.DeserializeObject<PlaylistsResponse>(sResponse, settings);
+                
+                playlistsResponse = JsonConvert.DeserializeObject<PlaylistsResponse>(GetReponseString(url), Settings);
 
                 if (playlistsResponse == null)
                     return null;
@@ -49,15 +45,16 @@ namespace DeezerDownloader.Core
             return playlists;
         }
 
+        public Album GetAlbumById(long albumId)
+        {
+            var url = $"/album/{albumId}";
+            return JsonConvert.DeserializeObject<Album>(GetReponseString(url), Settings);
+        }
+
         public Playlist GetPlaylistById(long playlistId)
         {
-            HttpResponseMessage response = Client.GetAsync($"/playlist/{playlistId}").Result;
-            if (!response.IsSuccessStatusCode)
-                return null;
-            
-            string sResponse = response.Content.ReadAsStringAsync().Result;
-            var settings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-dd HH:mm:ss" };
-            return JsonConvert.DeserializeObject<Playlist>(sResponse, settings);
+            var url = $"/playlist/{playlistId}";
+            return JsonConvert.DeserializeObject<Playlist>(GetReponseString(url), Settings);
         }
 
         public List<Track> GetTracksFromPlaylistId(long playlistId)
@@ -69,14 +66,7 @@ namespace DeezerDownloader.Core
 
             do
             {
-                HttpResponseMessage response = Client.GetAsync(url).Result;
-                if (!response.IsSuccessStatusCode)
-                    return null;
-
-                string sResponse = response.Content.ReadAsStringAsync().Result;
-
-                var settings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-dd HH:mm:ss" };
-                tracksResponse = JsonConvert.DeserializeObject<TracksResponse>(sResponse, settings);
+                tracksResponse = JsonConvert.DeserializeObject<TracksResponse>(GetReponseString(url), Settings);
 
                 if (tracksResponse == null)
                     return null;
@@ -91,23 +81,23 @@ namespace DeezerDownloader.Core
 
         public Artist GetArtistById(long artistId)
         {
-            HttpResponseMessage response = Client.GetAsync($"artist/{artistId}").Result;
-            if (!response.IsSuccessStatusCode)
-                return null;
-
-            string sResponse = response.Content.ReadAsStringAsync().Result;
-            var settings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-dd HH:mm:ss" };
-            return JsonConvert.DeserializeObject<Artist>(sResponse, settings);
+            var url = $"artist/{artistId}";
+            return JsonConvert.DeserializeObject<Artist>(GetReponseString(url), Settings);
         }
 
         public Track GetTrackById(long trackId)
         {
-            HttpResponseMessage response = Client.GetAsync($"track/{trackId}").Result;
+            var url = $"track/{trackId}";
+            return JsonConvert.DeserializeObject<Track>(GetReponseString(url));
+        }
+        
+        public string GetReponseString(string url)
+        {
+            HttpResponseMessage response = Client.GetAsync(url).Result;
             if (!response.IsSuccessStatusCode)
                 return null;
-
-            string sResponse = response.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<Track>(sResponse);
+            
+            return response.Content.ReadAsStringAsync().Result;
         }
     }
 }

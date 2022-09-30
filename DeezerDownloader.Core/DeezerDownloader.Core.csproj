@@ -103,7 +103,7 @@
     <ItemGroup>
         <Compile Include="AudioDownloader.cs" />
         <Compile Include="DeezerClient.cs" />
-        <Compile Include="DeezerDownloader.cs" />
+        <Compile Include="Downloader.cs" />
         <Compile Include="ExtensionMethods.cs" />
         <Compile Include="Models\Album.cs" />
         <Compile Include="Models\Artist.cs" />

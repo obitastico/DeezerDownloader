@@ -52,6 +52,7 @@
         <Compile Include="DeezerDownloaderForm.Designer.cs">
             <DependentUpon>DeezerDownloaderForm.cs</DependentUpon>
         </Compile>
+        <Compile Include="Helper.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="WaitProgress.cs">

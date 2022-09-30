@@ -35,20 +35,24 @@ namespace DeezerDownloader.Core
                 throw new Exception("Cannot get Video from Youtube");
 
             var manifest = await Youtube.Videos.Streams.GetManifestAsync(videoInfo.Id);
-            IStreamInfo streamInfo = manifest.GetAudioStreams().GetWithHighestBitrate();
+            IStreamInfo streamInfo = manifest
+                .GetAudioStreams()
+                .Where(x => x.Container.Name == "mp4")
+                .OrderBy(x => x.Size)
+                .FirstOrDefault();
             
             var dirPath = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrWhiteSpace(dirPath))
                 Directory.CreateDirectory(dirPath);
 
-            // await Youtube.Videos.DownloadAsync(
-            //     new[] { streamInfo }, 
-            //     new ConversionRequestBuilder(filePath)
-            //         .SetContainer(Container.Mp3)
-            //         .SetPreset(ConversionPreset.UltraFast)
-            //         .Build(),
-            //     progress
-            // );
+            await Youtube.Videos.DownloadAsync(
+                new[] { streamInfo }, 
+                new ConversionRequestBuilder(filePath)
+                    .SetContainer(Container.Mp3)
+                    .SetPreset(ConversionPreset.UltraFast)
+                    .Build(),
+                progress
+            );
             
             await TagInjector.InjectTagsAsync(filePath, videoInfo);
         }

@@ -5,7 +5,7 @@
   </Profiles>
   <Settings>
     <Setting Name="SavePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D:\Programmieren\RiderProjects\DeezerDownloader\out</Value>
     </Setting>
   </Settings>
 </SettingsFile>

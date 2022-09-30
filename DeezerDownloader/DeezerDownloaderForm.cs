@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using DeezerDownloader.Core;
 
@@ -12,7 +10,7 @@ namespace DeezerDownloader
     public partial class DeezerDownloaderForm : Form, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public readonly DeezerClient Deezer = new DeezerClient();
+        public readonly Downloader Deezer = new Downloader();
 
         public string SavePath
         {
@@ -49,7 +47,7 @@ namespace DeezerDownloader
             }
         }
 
-        private void DDFDownloadButton_Click(object sender, EventArgs e)
+        private async void DDFDownloadButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -74,13 +72,15 @@ namespace DeezerDownloader
             switch (DDFLinkTextBox.Text)
             {
                 case string a when a.Contains("profile"):
-                    long userId = Convert.ToInt64(a.Split('/')[a.Split('/').ToList().IndexOf("profile") + 1]);
+                    long userId = Helper.GetIdByParameterName(a, "profile");
+                    await Deezer.DownloadUserPlaylists(userId, SavePath);
                     break;
                 case string b when b.Contains("playlist"):
-                    
+                    long playlistId = Helper.GetIdByParameterName(b, "playlist");
+                    await Deezer.DownloadPlaylist(SavePath, playlistId);
                     break;
                 case string c when c.Contains("album"):
-                    Debug.WriteLine(c);
+                    long albumId = Helper.GetIdByParameterName(c, "album");
                     break;
                 default:
                     MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 

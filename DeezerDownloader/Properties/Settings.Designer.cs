@@ -24,7 +24,7 @@ namespace DeezerDownloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Programmieren\\RiderProjects\\DeezerDownloader\\out")]
         public string SavePath {
             get {
                 return ((string)(this["SavePath"]));

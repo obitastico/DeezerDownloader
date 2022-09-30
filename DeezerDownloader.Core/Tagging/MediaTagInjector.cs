@@ -67,9 +67,7 @@ namespace DeezerDownloader.Core.Tagging
                 //     .Select(t => t.Url)
                 //     .FirstOrDefault() ??
 
-            Console.WriteLine(thumbnailUrl);
-            
-            mediaFile.SetThumbnail(
+                mediaFile.SetThumbnail(
                 await Http.Client.GetByteArrayAsync(thumbnailUrl)
             );
         }

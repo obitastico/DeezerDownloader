@@ -10,10 +10,14 @@ namespace DeezerDownloader.Core.Models
         public string Title { get; set; }
         [JsonProperty(PropertyName = "tracklist")]
         public string Tracklist { get; set; }
+        [JsonProperty(PropertyName = "artist")]
+        public Artist Artist { get; set; }
+        [JsonProperty(PropertyName = "tracks")]
+        public TracksResponse Tracks { get; set; }
 
         public override string ToString()
         {
-            return $"<Album Id={Id} Title={Title} Tracklist={Tracklist}>";
+            return $"<Album Id={Id} Title={Title} Artist<{Artist}> Tracklist={Tracklist}>";
         }
     }
 }
