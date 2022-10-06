@@ -28,7 +28,7 @@ namespace DeezerDownloader.Core
             TagInjector = new MediaTagInjector();
         }
 
-        public async Task DownloadAudioAsnyc(Track track, string filePath, IProgress<double> progress)
+        public async Task DownloadAudioAsnyc(Track track, string filePath, IProgress<double> progress, CancellationToken cancellationToken = default)
         {
             string sQuery = $"{track.Artist.Name} - {track.Title}";
             VideoSearchResult videoInfo = (await Youtube.Search.GetVideosAsync(sQuery).CollectAsync(1)).FirstOrDefault();
@@ -36,19 +36,12 @@ namespace DeezerDownloader.Core
             if (videoInfo == null)
                 throw new Exception("Cannot get Video from Youtube");
 
-            var manifest = await Youtube.Videos.Streams.GetManifestAsync(videoInfo.Id);
+            var manifest = await Youtube.Videos.Streams.GetManifestAsync(videoInfo.Id, cancellationToken);
             IStreamInfo streamInfo = manifest
                 .GetAudioStreams()
                 .Where(x => x.Container.Name == "mp4")
                 .OrderBy(x => x.Size)
                 .FirstOrDefault();
-            
-            // for (int i = 1; i <= 100; i++)
-            // {
-            //     progress.Report(i * Math.Pow(10, -2));
-            //     Debug.WriteLine(i * Math.Pow(10, -2));
-            //     await Task.Delay(75);
-            // }
 
             var dirPath = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrWhiteSpace(dirPath))
@@ -60,7 +53,8 @@ namespace DeezerDownloader.Core
                     .SetContainer(Container.Mp3)
                     .SetPreset(ConversionPreset.UltraFast)
                     .Build(),
-                progress
+                progress,
+                cancellationToken
             );
             
             await TagInjector.InjectTagsAsync(filePath, videoInfo);

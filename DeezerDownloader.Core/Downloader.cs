@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using DeezerDownloader.Core.Models;
 
@@ -24,24 +25,25 @@ namespace DeezerDownloader.Core
         public async Task DownloadDeezerUrlOfType(
             string rootPath, 
             long id, 
-            string linkType
+            string linkType,
+            CancellationToken cancellationToken = default
         )
         {
             switch (linkType)
             {
                 case "profile":
-                    await DownloadUserPlaylists(rootPath, id);
+                    await DownloadUserPlaylists(rootPath, id, cancellationToken);
                     break;
                 case "album":
-                    await DownloadAlbum(rootPath, id);
+                    await DownloadAlbum(rootPath, id, cancellationToken);
                     break;
                 case "playlist":
-                    await DownloadPlaylist(rootPath, id);
+                    await DownloadPlaylist(rootPath, cancellationToken, id);
                     break;
             }
         }
 
-        public async Task DownloadUserPlaylists(string rootPath, long userId)
+        public async Task DownloadUserPlaylists(string rootPath, long userId, CancellationToken cancellationToken = default)
         {
             List<Playlist> playlists = Deezer.GetPlaylistsByUserId(userId);
             if (playlists.Count == 0)
@@ -49,11 +51,11 @@ namespace DeezerDownloader.Core
 
             foreach (Playlist playlist in playlists)
             {
-                await DownloadPlaylist(rootPath, playlist.Id);
+                await DownloadPlaylist(rootPath, cancellationToken, playlist.Id);
             }
         }
 
-        public async Task DownloadPlaylist(string rootPath, long playlistId = 0, Playlist playlist = null)
+        public async Task DownloadPlaylist(string rootPath, CancellationToken cancellationToken = default, long playlistId = 0, Playlist playlist = null)
         {
             if (playlistId == 0 && playlist == null)
                 throw new Exception();
@@ -69,27 +71,26 @@ namespace DeezerDownloader.Core
             Console.WriteLine($"Starting Download for Playlist: {playlist.Title}");
             foreach (Track track in tracks)
             {
-                await DownloadTrack(track, Path.Combine(rootPath, playlist.Creator.Name, playlist.Title, track.Title+".mp3"));
+                await DownloadTrack(track, Path.Combine(rootPath, playlist.Creator.Name, playlist.Title, $"{track.Artist.Name} - {track.Title}.mp3"), cancellationToken);
             }
             
             Console.WriteLine($"Download of Playlist {playlist.Title} has been successful!");
         }
 
-        public async Task DownloadAlbum(string rootPath, long albumId)
+        public async Task DownloadAlbum(string rootPath, long albumId, CancellationToken cancellationToken = default)
         {
             Album album = Deezer.GetAlbumById(albumId);
             
             Console.WriteLine($"Starting Download for Album: {album.Title}");
             foreach (Track track in album.Tracks.Data)
             {
-                await DownloadTrack(track, Path.Combine(rootPath, album.Title, track.Title + ".mp3"));
-                // break; //// TODO: for final
+                await DownloadTrack(track, Path.Combine(rootPath, album.Title, track.Title + ".mp3"), cancellationToken);
             }
             
             Console.WriteLine($"Download of Album {album.Title} has been successful!");
         }
 
-        public async Task DownloadTrack(Track track, string filePath)
+        public async Task DownloadTrack(Track track, string filePath, CancellationToken cancellationToken = default)
         {
             try
             { 
@@ -98,7 +99,7 @@ namespace DeezerDownloader.Core
             catch (DirectoryNotFoundException) {}
 
             Progress<double> progress = new Progress<double>(p => ProgressChangedEvent.Invoke(p, track));
-            await AudioDownloader.DownloadAudioAsnyc(track, filePath, progress);
+            await AudioDownloader.DownloadAudioAsnyc(track, filePath, progress, cancellationToken);
         }
         
         private void OnProgressChangedEvent(double progress, Track track)

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using DeezerDownloader.Core;
 using DeezerDownloader.Core.Models;
@@ -13,6 +14,8 @@ namespace DeezerDownloader
         public event PropertyChangedEventHandler PropertyChanged;
         public Downloader Deezer { get; }
         public WaitProgress ProgressView { get; set; }
+        public CancellationTokenSource CancelTokenSource { get; set; }
+        private bool DownloadSuccessfull { get; set; }
 
         public string SavePath
         {
@@ -86,13 +89,28 @@ namespace DeezerDownloader
                 return;
             }
 
-            ProgressView = new WaitProgress();
+
+            SetupWaitProgress();
+            CancelTokenSource = new CancellationTokenSource();
             ProgressView.Show();
             long id = Helper.GetIdByParameterName(DDFLinkTextBox.Text, linkType);
-            await Deezer.DownloadDeezerUrlOfType(SavePath, id, linkType);
+            DownloadSuccessfull = false;
+            await Deezer.DownloadDeezerUrlOfType(SavePath, id, linkType, CancelTokenSource.Token);
+            DownloadSuccessfull = true;
             ProgressView.Close();
 
             MessageBox.Show("Download abgeschlossen", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SetupWaitProgress()
+        {
+            ProgressView = new WaitProgress();
+            
+            ProgressView.FormClosing += (s, e) =>
+            {
+                if (!DownloadSuccessfull)
+                    CancelTokenSource.Cancel();
+            };
         }
 
         private void DDFLinkTextBox_GotFocus(object sender, EventArgs e)
