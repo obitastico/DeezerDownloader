@@ -37,6 +37,10 @@ namespace DeezerDownloader.Core
                 case "album":
                     await DownloadAlbum(rootPath, id, cancellationToken);
                     break;
+                 case "track":
+                     Track track = Deezer.GetTrackById(id);
+                     await DownloadTrack(track, Path.Combine(rootPath, track.Title+".mp3"), cancellationToken);
+                     break;
                 case "playlist":
                     await DownloadPlaylist(rootPath, cancellationToken, id);
                     break;

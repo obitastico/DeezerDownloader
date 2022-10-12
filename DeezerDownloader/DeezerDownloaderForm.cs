@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -81,7 +82,7 @@ namespace DeezerDownloader
                 return;
             }
 
-            string linkType = DDFLinkTextBox.Text.ContainsAny("profile", "playlist", "album");
+            string linkType = DDFLinkTextBox.Text.ContainsAny("profile", "playlist", "album", "track");
             if (linkType == null)
             {
                 MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 
@@ -93,10 +94,12 @@ namespace DeezerDownloader
             SetupWaitProgress();
             CancelTokenSource = new CancellationTokenSource();
             ProgressView.Show();
+            SetControlsEnabled(false);
             long id = Helper.GetIdByParameterName(DDFLinkTextBox.Text, linkType);
             DownloadSuccessfull = false;
             await Deezer.DownloadDeezerUrlOfType(SavePath, id, linkType, CancelTokenSource.Token);
             DownloadSuccessfull = true;
+            SetControlsEnabled(true);
             ProgressView.Close();
 
             MessageBox.Show("Download abgeschlossen", "Download", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -109,8 +112,19 @@ namespace DeezerDownloader
             ProgressView.FormClosing += (s, e) =>
             {
                 if (!DownloadSuccessfull)
+                {
                     CancelTokenSource.Cancel();
+                    SetControlsEnabled(true);
+                }
             };
+        }
+
+        private void SetControlsEnabled(bool enabled)
+        {
+            DDFDownloadButton.Enabled = enabled;
+            DDFChoosePathButton.Enabled = enabled;
+            DDFLinkTextBox.Enabled = enabled;
+            DDFPathTextBox.Enabled = enabled;
         }
 
         private void DDFLinkTextBox_GotFocus(object sender, EventArgs e)
