@@ -1,12 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DeezerDownloader.Properties" GeneratedClassName="Settings">
+  <Profiles />
   <Settings>
     <Setting Name="SavePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Programmieren\RiderProjects\DeezerDownloader\out</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
-

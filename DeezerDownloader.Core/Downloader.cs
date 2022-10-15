@@ -96,11 +96,8 @@ namespace DeezerDownloader.Core
 
         public async Task DownloadTrack(Track track, string filePath, CancellationToken cancellationToken = default)
         {
-            try
-            { 
-                File.Delete(filePath);
-            }
-            catch (DirectoryNotFoundException) {}
+            if (File.Exists(filePath))
+                return;
 
             Progress<double> progress = new Progress<double>(p => ProgressChangedEvent.Invoke(p, track));
             await AudioDownloader.DownloadAudioAsnyc(track, filePath, progress, cancellationToken);
