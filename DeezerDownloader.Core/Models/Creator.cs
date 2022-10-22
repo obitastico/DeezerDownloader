@@ -13,7 +13,7 @@ namespace DeezerDownloader.Core.Models
 
         public override string ToString()
         {
-            return $"<Creator Id={Id} Title={Name} Tracklist={Tracklist}>";
+            return $"<Creator Id={Id} Name={Name} Tracklist={Tracklist}>";
         }
     }
 }

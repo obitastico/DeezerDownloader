@@ -150,9 +150,8 @@
     <Compile Include="Models\Creator.cs" />
     <Compile Include="Models\MusicBrainzRecording.cs" />
     <Compile Include="Models\Playlist.cs" />
-    <Compile Include="Models\PlaylistsResponse.cs" />
     <Compile Include="Models\Track.cs" />
-    <Compile Include="Models\TracksResponse.cs" />
+    <Compile Include="Models\ItemListResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tagging\Http.cs" />

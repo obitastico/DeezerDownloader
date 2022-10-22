@@ -21,7 +21,7 @@ namespace DeezerDownloader.Core.Models
         [JsonProperty(PropertyName = "creation_date")]
         public DateTime CreationDate { get; set; }
         [JsonProperty(PropertyName = "tracks")]
-        public TracksResponse Tracks { get; set; }
+        public ItemListResponse<Track> Tracks { get; set; }
         [JsonProperty(PropertyName = "creator")]
         public Creator Creator { get; set; }
 

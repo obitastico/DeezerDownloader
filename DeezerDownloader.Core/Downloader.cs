@@ -33,6 +33,10 @@ namespace DeezerDownloader.Core
             {
                 case "profile":
                     await DownloadUserPlaylists(rootPath, id, cancellationToken);
+                    await DownloadFavouriteTracks(rootPath, id, cancellationToken);
+                    break;
+                case "loved":
+                    await DownloadFavouriteTracks(rootPath, id, cancellationToken);
                     break;
                 case "album":
                     await DownloadAlbum(rootPath, id, cancellationToken);
@@ -59,6 +63,26 @@ namespace DeezerDownloader.Core
             }
         }
 
+        public async Task DownloadFavouriteTracks(string rootPath, long userId,
+            CancellationToken cancellationToken = default)
+        {
+            List<Track> tracks = Deezer.GetFavouriteTracksByUserId(userId);
+            Creator creator = Deezer.GetCreatorByid(userId);
+
+            Console.WriteLine($"Starting Download for Favourite Songs of: {creator.Name}");
+            await DownloadTracks(tracks, Path.Combine(rootPath, creator.Name, "Lieblingssongs"), cancellationToken);
+            Console.WriteLine($"Download for Favourite Songs of {creator.Name} has been successful!");
+        }
+
+        public async Task DownloadTracks(List<Track> tracks, string tracksPath,
+            CancellationToken cancellationToken = default)
+        {
+            foreach (Track track in tracks)
+            {
+                await DownloadTrack(track, Path.Combine(tracksPath, $"{track.Artist.Name} - {track.Title}.mp3"), cancellationToken);
+            }
+        }
+
         public async Task DownloadPlaylist(string rootPath, CancellationToken cancellationToken = default, long playlistId = 0, Playlist playlist = null)
         {
             if (playlistId == 0 && playlist == null)
@@ -73,11 +97,7 @@ namespace DeezerDownloader.Core
             List<Track> tracks = playlist.Tracks.Data;
             
             Console.WriteLine($"Starting Download for Playlist: {playlist.Title}");
-            foreach (Track track in tracks)
-            {
-                await DownloadTrack(track, Path.Combine(rootPath, playlist.Creator.Name, playlist.Title, $"{track.Artist.Name} - {track.Title}.mp3"), cancellationToken);
-            }
-            
+            await DownloadTracks(tracks, Path.Combine(rootPath, playlist.Creator.Name, playlist.Title), cancellationToken);
             Console.WriteLine($"Download of Playlist {playlist.Title} has been successful!");
         }
 

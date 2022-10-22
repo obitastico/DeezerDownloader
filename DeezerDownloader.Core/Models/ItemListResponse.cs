@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 
 namespace DeezerDownloader.Core.Models
 {
-    public class PlaylistsResponse
+    public class ItemListResponse<T>
     {
         [JsonProperty(PropertyName = "data")]
-        public List<Playlist> Data { get; set; }
+        public List<T> Data { get; set; }
         [JsonProperty(PropertyName = "next")]
         public string Next { get; set; }
     }

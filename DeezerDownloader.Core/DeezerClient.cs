@@ -21,28 +21,46 @@ namespace DeezerDownloader.Core
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        public List<Playlist> GetPlaylistsByUserId(long userId)
+        
+        public List<T> GetItemList<T>(string url)
         {
-            List<Playlist> playlists = new List<Playlist>();
-
-            PlaylistsResponse playlistsResponse;
-            string url = $"user/{userId}/playlists";
+            ItemListResponse<T> itemListResponse;
+            List<T> itemList = new List<T>();
 
             do
             {
-                
-                playlistsResponse = JsonConvert.DeserializeObject<PlaylistsResponse>(GetReponseString(url), Settings);
+                itemListResponse = JsonConvert.DeserializeObject<ItemListResponse<T>>(GetReponseString(url), Settings);
 
-                if (playlistsResponse == null)
-                    return null;
+                if (itemListResponse == null)
+                    return itemList;
                 
-                playlists.AddRange(playlistsResponse.Data);
-                url = playlistsResponse.Next;
+                itemList.AddRange(itemListResponse.Data);
+                url = itemListResponse.Next;
 
-            } while (playlistsResponse.Next != null);
+            } while (itemListResponse.Next != null);
             
-            return playlists;
+            return itemList;
+        }
+        
+        public List<Track> GetFavouriteTracksByUserId(long userId)
+        {
+            string url = $"user/{userId}/tracks";
+            
+            return GetItemList<Track>(url);
+        }
+
+        public List<Track> GetTracksFromPlaylistId(long playlistId)
+        {
+            string url = $"playlist/{playlistId}/tracks";
+            
+            return GetItemList<Track>(url);
+        }
+        
+        public List<Playlist> GetPlaylistsByUserId(long userId)
+        {
+            string url = $"user/{userId}/playlists";
+
+            return GetItemList<Playlist>(url);
         }
 
         public Album GetAlbumById(long albumId)
@@ -57,28 +75,6 @@ namespace DeezerDownloader.Core
             return JsonConvert.DeserializeObject<Playlist>(GetReponseString(url), Settings);
         }
 
-        public List<Track> GetTracksFromPlaylistId(long playlistId)
-        {
-            List<Track> tracks = new List<Track>();
-
-            TracksResponse tracksResponse;
-            string url = $"playlist/{playlistId}/tracks";
-
-            do
-            {
-                tracksResponse = JsonConvert.DeserializeObject<TracksResponse>(GetReponseString(url), Settings);
-
-                if (tracksResponse == null)
-                    return null;
-                
-                tracks.AddRange(tracksResponse.Data);
-                url = tracksResponse.Next;
-
-            } while (tracksResponse.Next != null);
-            
-            return tracks;
-        }
-
         public Artist GetArtistById(long artistId)
         {
             var url = $"artist/{artistId}";
@@ -89,6 +85,12 @@ namespace DeezerDownloader.Core
         {
             var url = $"track/{trackId}";
             return JsonConvert.DeserializeObject<Track>(GetReponseString(url));
+        }
+        
+        public Creator GetCreatorByid(long userId)
+        {
+            var url = $"/user/{userId}";
+            return JsonConvert.DeserializeObject<Creator>(GetReponseString(url));
         }
         
         public string GetReponseString(string url)

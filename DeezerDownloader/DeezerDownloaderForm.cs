@@ -82,7 +82,7 @@ namespace DeezerDownloader
                 return;
             }
 
-            string linkType = DDFLinkTextBox.Text.ContainsAny("profile", "playlist", "album", "track");
+            string linkType = DDFLinkTextBox.Text.ContainsAny("loved", "profile", "playlist", "album", "track");
             if (linkType == null)
             {
                 MessageBox.Show(@"Der angegebene Link kann leider nicht gedownloadet werden.", 

@@ -13,7 +13,7 @@ namespace DeezerDownloader.Core.Models
         [JsonProperty(PropertyName = "artist")]
         public Artist Artist { get; set; }
         [JsonProperty(PropertyName = "tracks")]
-        public TracksResponse Tracks { get; set; }
+        public ItemListResponse<Track> Tracks { get; set; }
 
         public override string ToString()
         {
