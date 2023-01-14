@@ -7,7 +7,7 @@ namespace DeezerDownloader.Core
         public static async Task Main(string[] args)
         {
             Downloader deezer = new Downloader();
-            await deezer.DownloadAlbum(@"D:\Programmieren\RiderProjects\DeezerDownloader\out", 302127);
+            await deezer.DownloadAlbum("OUTPUT_PATH", 00000);
         }
     }
 }
